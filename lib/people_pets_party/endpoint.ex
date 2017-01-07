@@ -36,6 +36,6 @@ defmodule PeoplePetsParty.Endpoint do
     key: "_people_pets_party_key",
     signing_salt: "5naYWT/l"
 
-  plug Corsica, origins: [ "http://first-brain.surge.sh", "http://localhost:4200", "http://localhost:4000", "http://localhost:4300" ], allow_headers: [ "content-type" ]
+  plug Corsica, origins: [ "http://eminent-idea.surge.sh", "http://localhost:4200", "http://localhost:4000", "http://localhost:4300" ], allow_headers: [ "content-type" ]
   plug PeoplePetsParty.Router
 end
