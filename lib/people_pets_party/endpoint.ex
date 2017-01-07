@@ -36,5 +36,6 @@ defmodule PeoplePetsParty.Endpoint do
     key: "_people_pets_party_key",
     signing_salt: "5naYWT/l"
 
+  plug Corsica, origins: [ "http://localhost:4200", "http://localhost:4000" ], allow_headers: [ "content-type" ]
   plug PeoplePetsParty.Router
 end

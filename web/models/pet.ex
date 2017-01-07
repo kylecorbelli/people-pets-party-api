@@ -4,7 +4,7 @@ defmodule PeoplePetsParty.Pet do
   schema "pets" do
     field :name, :string
     field :age, :integer
-    field :type, :string
+    field :animal, :string
     field :image_url, :string
     many_to_many :people, PeoplePetsParty.Person, join_through: "people_pets"
 
@@ -16,7 +16,7 @@ defmodule PeoplePetsParty.Pet do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :age, :type, :image_url])
+    |> cast(params, [:name, :age, :animal, :image_url])
     |> validate_required([:name, :age, :type])
   end
 end

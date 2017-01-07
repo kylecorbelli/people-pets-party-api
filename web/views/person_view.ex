@@ -1,18 +1,10 @@
 defmodule PeoplePetsParty.PersonView do
   use PeoplePetsParty.Web, :view
+  use JaSerializer.PhoenixView
 
-  def render("index.json", %{people: people}) do
-    %{data: render_many(people, PeoplePetsParty.PersonView, "person.json")}
-  end
+  attributes [ :name, :age, :location, :image_url ]
 
-  def render("show.json", %{person: person}) do
-    %{data: render_one(person, PeoplePetsParty.PersonView, "person.json")}
-  end
-
-  def render("person.json", %{person: person}) do
-    %{id: person.id,
-      name: person.name,
-      age: person.age,
-      location: person.location}
-  end
+  has_many :pets,
+    serializer: PeoplePetsParty.PetView
 end
+

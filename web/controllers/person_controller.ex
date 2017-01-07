@@ -5,10 +5,10 @@ defmodule PeoplePetsParty.PersonController do
 
   def index(conn, _params) do
     people = Repo.all(Person)
-    render(conn, "index.json", people: people)
+    render(conn, "index.json-api", data: people)
   end
 
-  def create(conn, %{"person" => person_params}) do
+  def create(conn, %{"data" => %{"attributes" => person_params}}) do
     changeset = Person.changeset(%Person{}, person_params)
 
     case Repo.insert(changeset) do
@@ -16,7 +16,7 @@ defmodule PeoplePetsParty.PersonController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", person_path(conn, :show, person))
-        |> render("show.json", person: person)
+        |> render("show.json-api", data: person)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -25,8 +25,13 @@ defmodule PeoplePetsParty.PersonController do
   end
 
   def show(conn, %{"id" => id}) do
-    person = Repo.get!(Person, id)
-    render(conn, "show.json", person: person)
+    person = Person
+             |> Repo.get(id)
+             |> Repo.preload([ :pets ])
+    case person do
+      %Person{} -> render(conn, "show.json-api", data: person, opts: [ include: "pets" ])
+      nil -> json(conn, %{ data: nil })
+    end
   end
 
   def update(conn, %{"id" => id, "person" => person_params}) do
@@ -35,7 +40,7 @@ defmodule PeoplePetsParty.PersonController do
 
     case Repo.update(changeset) do
       {:ok, person} ->
-        render(conn, "show.json", person: person)
+        render(conn, "show.json-api", data: person)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

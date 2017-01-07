@@ -2,7 +2,9 @@ defmodule PeoplePetsParty.Router do
   use PeoplePetsParty.Web, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, [ "json", "json-api" ]
+    plug JaSerializer.ContentTypeNegotiation
+    plug JaSerializer.Deserializer
   end
 
   scope "/api", PeoplePetsParty do

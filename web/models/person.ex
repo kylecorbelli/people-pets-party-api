@@ -6,7 +6,7 @@ defmodule PeoplePetsParty.Person do
     field :age, :integer
     field :location, :string
     field :image_url, :string
-    many_to_many :pets, PeoplePetsParty.Pet, join_through: "people_pets"
+    many_to_many :pets, PeoplePetsParty.Pet, join_through: "people_pets", on_delete: :delete_all
 
     timestamps()
   end
