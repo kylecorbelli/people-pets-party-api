@@ -6,7 +6,7 @@ defmodule PeoplePetsParty.Pet do
     field :age, :integer
     field :animal, :string
     field :image_url, :string
-    many_to_many :people, PeoplePetsParty.Person, join_through: "people_pets"
+    many_to_many :people, PeoplePetsParty.Person, join_through: "people_pets", on_delete: :delete_all
 
     timestamps()
   end
@@ -17,6 +17,6 @@ defmodule PeoplePetsParty.Pet do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:name, :age, :animal, :image_url])
-    |> validate_required([:name, :age, :type])
+    |> validate_required([:name, :age, :animal])
   end
 end

@@ -8,7 +8,7 @@ defmodule PeoplePetsParty.PetController do
     render(conn, "index.json-api", data: pets)
   end
 
-  def create(conn, %{"pet" => pet_params}) do
+  def create(conn, %{"data" => %{"attributes" => pet_params}}) do
     changeset = Pet.changeset(%Pet{}, pet_params)
 
     case Repo.insert(changeset) do
