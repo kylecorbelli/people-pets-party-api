@@ -34,13 +34,14 @@ defmodule PeoplePetsParty.PersonController do
     end
   end
 
-  def update(conn, %{"id" => id, "person" => person_params}) do
+  def update(conn, %{"data" => %{"id" => id, "attributes" => person_params}}) do
     person = Repo.get!(Person, id)
     changeset = Person.changeset(person, person_params)
 
     case Repo.update(changeset) do
       {:ok, person} ->
-        render(conn, "show.json-api", data: person)
+        person = person |> Repo.preload(:pets)
+        render(conn, "show.json-api", data: person, opts: [ include: "pets" ])
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
