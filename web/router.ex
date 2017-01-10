@@ -12,6 +12,6 @@ defmodule PeoplePetsParty.Router do
 
     resources "/people", PersonController, except: [ :new, :edit ]
     resources "/pets", PetController, except: [ :new, :edit ]
-    resources "/person-pets-connection", PersonPetsConnectionController, only: [ :create, :delete ]
+    resources "/person-pets-connections", PersonPetsConnectionController, only: [ :create, :delete ]
   end
 end

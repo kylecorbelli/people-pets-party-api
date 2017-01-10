@@ -5,7 +5,6 @@ defmodule PeoplePetsParty.PersonPetsConnectionController do
 
   alias PeoplePetsParty.PersonPet
   alias PeoplePetsParty.Person
-  alias PeoplePetsParty.Pet
 
   def create(conn, %{"data" => %{"attributes" => person_pets_connection_params}}) do
     person_id = person_pets_connection_params["person_id"]
